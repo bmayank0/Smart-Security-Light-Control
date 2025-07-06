@@ -1,0 +1,26 @@
+int pirPin = 2;
+int ldrPin = A0;
+int ledPin = 13;
+int threshold = 600;
+
+void setup() {
+  pinMode(pirPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int motion = digitalRead(pirPin);
+  int light = analogRead(ldrPin);
+
+  Serial.print("Motion: "); Serial.print(motion);
+  Serial.print(" | Light: "); Serial.println(light);
+
+  if (motion == HIGH && light < threshold) {
+    digitalWrite(ledPin, HIGH);
+    Serial.println("✅ ALERT: Motion in DARKNESS!");
+    delay(5000);
+    digitalWrite(ledPin, LOW);
+  }
+  delay(200);
+}
